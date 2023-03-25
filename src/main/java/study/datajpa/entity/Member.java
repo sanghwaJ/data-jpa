@@ -7,6 +7,9 @@ import javax.persistence.*;
 @Entity
 @Getter @Setter // 실무에선 Setter 사용 X
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NamedQuery(
+        name="Member.findByUsername",
+        query="select m from Member m where m.username = :username")
 @ToString(of = {"id", "username", "age"}) // "team"은 금지! 무한루프 때문..
 public class Member {
 
@@ -25,6 +28,12 @@ public class Member {
     // @NoArgsConstructor(access = AccessLevel.PROTECTED)로 대체
     // protected Member() {
     // }
+
+
+    public Member(String username, int age) {
+        this.username = username;
+        this.age = age;
+    }
 
     public Member(String username) {
         this.username = username;
