@@ -7,11 +7,12 @@ import javax.persistence.*;
 @Entity
 @Getter @Setter // 실무에선 Setter 사용 X
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString(of = {"id", "username", "age"}) // "team"은 금지! 무한루프 때문..
 @NamedQuery(
         name="Member.findByUsername",
         query="select m from Member m where m.username = :username")
-@ToString(of = {"id", "username", "age"}) // "team"은 금지! 무한루프 때문..
-public class Member {
+@NamedEntityGraph(name = "Member.all", attributeNodes = @NamedAttributeNode("team"))
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue
